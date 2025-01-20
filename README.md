@@ -1,5 +1,7 @@
 # SecureStore Demo App
 
+![Maven Build](https://github.com/jgteam/secureTokenDemo/actions/workflows/maven.yml/badge.svg)
+
 This is a demo app to show how to use the "SecureStore" capabilities of different platforms and will be a Proof of Concept for storing sensitive OpenID Connect tokens securely when used with native desktop applications.
 
 This Demo is part of a Bachelor's thesis project by Jannis Günsche from the University of Applied Sciences in Darmstadt, Germany.
