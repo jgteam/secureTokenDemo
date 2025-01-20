@@ -72,29 +72,15 @@ public class AppLogic {
         } else {
             // Save as 'another'-Application
 
-            //try {
-                String command = "java -jar CredStoreCLI.jar " + credKey + " " + token;
-                Logger.log("AppLogic", "Executing command: " + command);
-                /*Process p = Runtime.getRuntime().exec(command);
-                logCredStoreCLIOutput(p);
-                p.waitFor();
-                if(p.exitValue() == 0) {
-                    Logger.log("AppLogic", "Credential stored successfully for key '" + credKey + "'.");
-                    showMessage("Credential stored successfully for key '" + credKey + "'.");
+            String command = "java -jar CredStoreCLI.jar " + credKey + " " + token;
+            Logger.log("AppLogic", "Generated CLI command: " + command);
+            CopyCommandDialog.open(command);
 
-                    CredentialTracker.getInstance().addCredential(credKey);
+            CredentialTracker.getInstance().addCredential(credKey);
 
-                    syncComboBoxWithCredentialTracker();
-                    AppShell.textNewName.setText("");
-                    AppShell.textNewToken.setText("");
-                } else {
-                    Logger.log("AppLogic", "Failed to store credential for key '" + credKey + "'.");
-                    showMessage("Failed to store credential for key '" + credKey + "'.");
-                }*/
-            //} catch (IOException | InterruptedException e) {
-            //    Logger.log("AppLogic", "Error storing credential: " + e.getMessage());
-            //    showMessage("Error storing credential: " + e.getMessage());
-            //}
+            syncComboBoxWithCredentialTracker();
+            AppShell.textNewName.setText("");
+            AppShell.textNewToken.setText("");
         }
 
     }
