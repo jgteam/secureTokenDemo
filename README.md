@@ -18,7 +18,7 @@ The Demo consists of two parts:
 
 The GUI-App is used to show how the data can be stored and retrieved securely.
 
-The CLI-App is used to simulate 'a different' application that stored sensitive data securely. The GUI-App will be able to retrieve the not owned data from the CLI-App, after additional authentication by the user, and show it in the GUI.
+The CLI-App is used to simulate 'a different' application that stored sensitive data securely. The GUI-App will be able to retrieve the not owned data from the CLI-App. This shows that saved credentials can be shared between different applications.
 
 ## Getting Started
 
