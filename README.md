@@ -14,7 +14,7 @@ Disclaimer: This app is not intended for production use and is only a proof of c
 
 The Demo consists of two parts:
  1. A GUI-App written in Java which is build for Windows, macOS and Linux separately. 
- 2. A CLI-App also written in Java which is multiplatform and can be used on Windows, macOS and Linux.
+ 2. A CLI-App (named: `credStoreCLI`) also written in Java which is multiplatform and can be used on Windows, macOS and Linux.
 
 The GUI-App is used to show how the data can be stored and retrieved securely.
 
