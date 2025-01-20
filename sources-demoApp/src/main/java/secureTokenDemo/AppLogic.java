@@ -1,15 +1,14 @@
 package secureTokenDemo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.microsoft.credentialstorage.model.StoredCredential;
+import com.microsoft.credentialstorage.model.StoredToken;
+import com.microsoft.credentialstorage.model.StoredTokenType;
 import logger.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class AppLogic {
 
@@ -18,7 +17,7 @@ public class AppLogic {
     }
 
     public static void openTokenDialog(String credKey) {
-        StoredCredential storedCredential = null;
+        StoredToken storedCredential = null;
         try {
             storedCredential = SecureStorageHandler.getStoredCredential(credKey);
         } catch (Exception e) {
@@ -30,7 +29,7 @@ public class AppLogic {
             Logger.log("AppLogic", "No token found for credential key '" + credKey + "'.");
             showMessage("No credentials for key '" + credKey + "' retrieved.");
         } else {
-            TokenViewerDialog dialog = new TokenViewerDialog(credKey, storedCredential.getUsername(), storedCredential.getPassword());
+            TokenViewerDialog dialog = new TokenViewerDialog(credKey, storedCredential.getValue());
             dialog.open();
         }
 
@@ -53,7 +52,7 @@ public class AppLogic {
         if(AppShell.comboCreateType.getSelectionIndex() == 0) {
             // Save as 'this'-Application
 
-            StoredCredential storedCredential = new StoredCredential(App.USERNAME, token.toCharArray());
+            StoredToken storedCredential = new StoredToken(token.toCharArray(), StoredTokenType.ACCESS);
             boolean success = SecureStorageHandler.storeCredential(credKey, storedCredential);
 
             if(success) {

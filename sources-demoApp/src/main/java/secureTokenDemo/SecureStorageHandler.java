@@ -2,17 +2,17 @@ package secureTokenDemo;
 
 import com.microsoft.credentialstorage.SecretStore;
 import com.microsoft.credentialstorage.StorageProvider;
-import com.microsoft.credentialstorage.model.StoredCredential;
+import com.microsoft.credentialstorage.model.StoredToken;
 import logger.Logger;
 
 public class SecureStorageHandler {
 
     private static SecureStorageHandler instance = null;
 
-    private final SecretStore<StoredCredential> credentialStorage;
+    private final SecretStore<StoredToken> credentialStorage;
 
     private SecureStorageHandler() {
-        credentialStorage = StorageProvider.getCredentialStorage(true, StorageProvider.SecureOption.REQUIRED);
+        credentialStorage = StorageProvider.getTokenStorage(true, StorageProvider.SecureOption.REQUIRED);
     }
 
     private static SecureStorageHandler getInstance() {
@@ -23,7 +23,7 @@ public class SecureStorageHandler {
         return instance;
     }
 
-    public static StoredCredential getStoredCredential(String credKey) {
+    public static StoredToken getStoredCredential(String credKey) {
         Logger.log("SecureStorageHandler", "Retrieving credential with key: " + credKey);
         try {
             return getInstance().credentialStorage.get(credKey);
@@ -36,7 +36,7 @@ public class SecureStorageHandler {
         }
     }
 
-    public static boolean storeCredential(String credKey, StoredCredential credential) {
+    public static boolean storeCredential(String credKey, StoredToken credential) {
         Logger.log("SecureStorageHandler", "Storing credential with key: " + credKey);
         return getInstance().credentialStorage.add(credKey, credential);
     }

@@ -14,12 +14,10 @@ import java.util.Base64;
 public class TokenViewerDialog {
 
     private String credKey;
-    private String username;
     private char[] token;
 
-    public TokenViewerDialog(String credKey, String username, char[] token) {
+    public TokenViewerDialog(String credKey, char[] token) {
         this.credKey = credKey;
-        this.username = username;
         this.token = token;
     }
 
@@ -45,13 +43,6 @@ public class TokenViewerDialog {
         credKeyLabel.setText(credKey);
 
 
-        Label usernameLabelHeading = new Label(group, SWT.NONE);
-        usernameLabelHeading.setLayoutData(new GridData(SWT.BEGINNING, SWT.TOP, false, false));
-        usernameLabelHeading.setText("Username:");
-
-        Label usernameLabel = new Label(group, SWT.WRAP);
-        usernameLabel.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
-        usernameLabel.setText(username);
 
         Label tokenLabelHeading = new Label(group, SWT.NONE);
         tokenLabelHeading.setLayoutData(new GridData(SWT.BEGINNING, SWT.TOP, false, false));
