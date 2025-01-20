@@ -24,7 +24,7 @@ The CLI-App is used to simulate 'a different' application that stored sensitive 
 
 This project is build with Maven.
 
-The GUI-App as well as the CLI-App are automatically build by GitHub Actions and the artifacts are available for download in the 'Actions' tab of this repository.
+The GUI-App as well as the CLI-App are automatically build by GitHub Actions and the artifacts are available for download in the 'Actions' tab of this repository. To be able to download the artifacts, you need to be logged in to GitHub.
 
 To build the Artifacts yourself, you can use the following commands after cloning the repository:
 
