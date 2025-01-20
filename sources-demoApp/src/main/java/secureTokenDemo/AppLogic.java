@@ -85,20 +85,6 @@ public class AppLogic {
 
     }
 
-    private static void logCredStoreCLIOutput(Process process) throws IOException {
-        try (BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-             BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
-
-            String s;
-            while ((s = stdInput.readLine()) != null) {
-                Logger.log("Process: CredStoreCLI.jar", "stdOut: " + s);
-            }
-            while ((s = stdError.readLine()) != null) {
-                Logger.log("Process: CredStoreCLI.jar", "stdErr: " + s);
-            }
-        }
-    }
-
     private static void showMessage(String message) {
         Shell shell = AppShell.getShell(App.getDisplay());
         MessageBox messageBox = new MessageBox(shell, SWT.OK);
