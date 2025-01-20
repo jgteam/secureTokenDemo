@@ -2,7 +2,8 @@ package credStoreCLI;
 
 import com.microsoft.credentialstorage.SecretStore;
 import com.microsoft.credentialstorage.StorageProvider;
-import com.microsoft.credentialstorage.model.StoredCredential;
+import com.microsoft.credentialstorage.model.StoredToken;
+import com.microsoft.credentialstorage.model.StoredTokenType;
 
 import java.util.List;
 
@@ -39,9 +40,9 @@ public class CredStoreCLI {
         final String credKey = args[0];
         final char[] token = args[1].toCharArray();
 
-        SecretStore<StoredCredential> credentialStorage = StorageProvider.getCredentialStorage(true, StorageProvider.SecureOption.REQUIRED);
+        SecretStore<StoredToken> credentialStorage = StorageProvider.getTokenStorage(true, StorageProvider.SecureOption.REQUIRED);
 
-        final StoredCredential credential = new StoredCredential(USERNAME, token);
+        final StoredToken credential = new StoredToken(token, StoredTokenType.ACCESS);
 
         try {
             credentialStorage.add(credKey, credential);
