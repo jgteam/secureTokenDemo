@@ -12,6 +12,43 @@ This Demo is part of a Bachelor's thesis project by Jannis Günsche from the Uni
 
 Disclaimer: This app is not intended for production use and is only a proof of concept. It shows the secure storage of sensitive data in a native desktop application but does not handle all edge cases and errors that might occur in a real-world application. It also does not handle the token inside the app in a secure way, as this demo is only a proof of concept.
 
+## Repo Structure
+
+```
+.
+├── sources-cli
+│   └── src
+│       └── main
+│           └── java
+│               └── credStoreCLI
+│                   └── CredStoreCLI.java
+├── sources-demoApp
+│   └── src
+│       └── main
+│           └── java
+│               ├── logger
+│               │   └── Logger.java
+│               └── secureTokenDemo
+│                   ├── App.java
+│                   ├── AppLogic.java
+│                   ├── AppShell.java
+│                   ├── CopyCommandDialog.java
+│                   ├── CredentialTracker.java
+│                   ├── LogDialog.java
+│                   ├── SecureStorageHandler.java
+│                   └── TokenViewerDialog.java
+├── target-credStoreCLI
+│   └── pom.xml
+├── target-platform-linux-gtk-x86_64
+│   └── pom.xml
+├── target-platform-macos-aarch64
+│   └── pom.xml
+├── target-platform-windows-x86_64
+│   └── pom.xml
+├── README.md
+└── pom.xml
+```
+
 ## Content
 
 The Demo consists of two parts:
