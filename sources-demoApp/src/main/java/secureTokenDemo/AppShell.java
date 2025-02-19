@@ -5,6 +5,7 @@
  */
 package secureTokenDemo;
 
+import logger.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -23,6 +24,8 @@ public class AppShell {
     public static Text textNewToken;
     public static Combo comboCreateType;
 
+    public static Button buttonReadTokenMeasure;
+
     private AppShell() {
         // Prevent instantiation
     }
@@ -35,7 +38,7 @@ public class AppShell {
 
         shell = new Shell(display);
         shell.setText("Secure Token Storage Proof-of-Concept App");
-        shell.setSize(550, 500);
+        shell.setSize(550, 700);
 
         GridLayout layout = new GridLayout(1, false);
         shell.setLayout(layout);
@@ -47,9 +50,11 @@ public class AppShell {
         //GridData lastGroupGridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 
         GridData buttonsGridData = new GridData(SWT.END, SWT.CENTER, true, true);
-        buttonsGridData.widthHint = 200;
+        buttonsGridData.widthHint = 220;
+        GridData buttonsGridDataMeasure = new GridData(SWT.END, SWT.CENTER, true, true, 2, 1);
+        buttonsGridDataMeasure.widthHint = 220;
         GridData lastButtonsGridData = new GridData(SWT.END, SWT.TOP, true, false);
-        lastButtonsGridData.widthHint = 200;
+        lastButtonsGridData.widthHint = 220;
 
 
         // READ TOKEN GROUP
@@ -60,13 +65,18 @@ public class AppShell {
 
         combo = new Combo(groupRead, SWT.READ_ONLY);
         GridData comboGridData = new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 1, 1);
-        comboGridData.widthHint = 300;
+        comboGridData.widthHint = 280;
         combo.setLayoutData(comboGridData);
 
         Button buttonReadToken = new Button(groupRead, SWT.PUSH);
         buttonReadToken.setText("Request token");
         buttonReadToken.setLayoutData(buttonsGridData);
         buttonReadToken.setEnabled(false);
+
+        buttonReadTokenMeasure = new Button(groupRead, SWT.PUSH);
+        buttonReadTokenMeasure.setText("Request token (measure time)");
+        buttonReadTokenMeasure.setLayoutData(buttonsGridDataMeasure);
+        buttonReadTokenMeasure.setEnabled(false);
 
 
         // WRITE EXISTING CRED GROUP
@@ -77,7 +87,7 @@ public class AppShell {
 
         textExisting = new Text(groupAddExisting, SWT.BORDER);
         GridData textExistingGridData = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
-        textExistingGridData.widthHint = 300;
+        textExistingGridData.widthHint = 280;
         textExisting.setLayoutData(textExistingGridData);
         textExisting.setText("<Enter existing credential-key>");
 
@@ -94,7 +104,7 @@ public class AppShell {
 
         textNewName = new Text(groupAddNew, SWT.BORDER);
         GridData textNewNameGridData = new GridData(SWT.BEGINNING, SWT.TOP, false, false, 2, 1);
-        textNewNameGridData.widthHint = 300;
+        textNewNameGridData.widthHint = 280;
         textNewName.setLayoutData(textNewNameGridData);
         textNewName.setText("<Enter new credential-key>");
 
@@ -105,7 +115,7 @@ public class AppShell {
 
         comboCreateType = new Combo(groupAddNew, SWT.READ_ONLY);
         GridData comboCreateGridData = new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 1, 1);
-        comboCreateGridData.widthHint = 300;
+        comboCreateGridData.widthHint = 280;
         comboCreateType.add("As this Application");
         comboCreateType.add("As 'another' Application");
         comboCreateType.select(0);
@@ -116,9 +126,15 @@ public class AppShell {
         buttonAddNew.setLayoutData(lastButtonsGridData);
 
 
+
+        // MEASURE REPORT BUTTON
+        Button buttonMeasureReport = new Button(shell, SWT.PUSH);
+        buttonMeasureReport.setLayoutData(new GridData(SWT.END, SWT.TOP, true, false, 2, 1));
+        buttonMeasureReport.setText("View Time Measurements");
+
         // LOG BUTTON
         Button buttonOpenLog = new Button(shell, SWT.PUSH);
-        buttonOpenLog.setLayoutData(new GridData(SWT.END, SWT.TOP, false, false));
+        buttonOpenLog.setLayoutData(new GridData(SWT.END, SWT.TOP, true, false, 2, 1));
         buttonOpenLog.setText("Open Log Viewer");
 
         // INFO LABEL
@@ -134,7 +150,19 @@ public class AppShell {
         buttonReadToken.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                AppLogic.openTokenDialog(combo.getText());
+                AppLogic.retrieveToken(combo.getText());
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+                // Do nothing
+            }
+        });
+
+        buttonReadTokenMeasure.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                AppLogic.retrieveToken(combo.getText(), true, 100);
             }
 
             @Override
@@ -145,6 +173,7 @@ public class AppShell {
 
         combo.addModifyListener(e -> {
             buttonReadToken.setEnabled(!combo.getText().isEmpty());
+            buttonReadTokenMeasure.setEnabled(!combo.getText().isEmpty());
         });
 
         buttonAddExisting.addSelectionListener(new SelectionListener() {
@@ -187,6 +216,21 @@ public class AppShell {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 LogDialog.open();
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+                // Do nothing
+            }
+        });
+
+        buttonMeasureReport.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                MessageBox messageBox = new MessageBox(shell, SWT.ICON_INFORMATION | SWT.OK);
+                messageBox.setMessage(Logger.getTimeReport());
+                messageBox.setText("Time Measurements");
+                messageBox.open();
             }
 
             @Override

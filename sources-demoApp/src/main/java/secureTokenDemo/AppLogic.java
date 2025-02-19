@@ -9,6 +9,8 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 
 public class AppLogic {
 
@@ -16,21 +18,74 @@ public class AppLogic {
         // Prevent instantiation
     }
 
-    public static void openTokenDialog(String credKey) {
+    public static boolean retrieveToken(String credKey) {
+        return retrieveToken(credKey, false, 1);
+    }
+
+    public static boolean retrieveToken(String credKey, boolean measureTime, int count) {
+        if(count < 1) {
+            Logger.log("AppLogic", "Invalid count.");
+            return false;
+        } else if(count == 1) {
+            return retrieveToken(credKey, measureTime, true);
+        } else {
+            boolean lastResult = false;
+            for(int i = 0; i < count; i++) {
+                lastResult = retrieveToken(credKey, measureTime, false);
+                Logger.log("AppLogic", "Retrieval " + (i + 1) + " of " + count + ": " + (lastResult ? "Success" : "Failed"));
+
+                AppShell.buttonReadTokenMeasure.setText("Progress: " + (i + 1) + " of " + count);
+                AppShell.buttonReadTokenMeasure.getParent().layout();
+            }
+            MessageBox messageBox = new MessageBox(App.getShell(), SWT.ICON_INFORMATION | SWT.OK);
+            messageBox.setText("Measuring finished");
+            messageBox.setMessage("The measurement is finished. Please check the log or report for details.");
+            messageBox.open();
+            AppShell.buttonReadTokenMeasure.setText("Request token (measure time)");
+            return true;
+        }
+    }
+
+    public static boolean retrieveToken(String credKey, boolean measureTime, boolean openDialog) {
         StoredToken storedCredential = null;
+        Instant start = null;
+        Instant end = null;
+
         try {
+            if(measureTime) {
+                start = Instant.now();
+            }
             storedCredential = SecureStorageHandler.getStoredCredential(credKey);
+            if(measureTime) {
+                end = Instant.now();
+            }
         } catch (Exception e) {
             Logger.log("AppLogic", "Error retrieving token: " + e.getMessage());
-            return;
+            return false;
+        }
+
+        if(measureTime && start != null && end != null) {
+            long timeElapsed = Duration.between(start, end).toMillis();
+            Logger.log("AppShell", "Decryption took " + timeElapsed + " ms.");
+            Logger.logTime(timeElapsed);
+            if(openDialog) {
+                MessageBox messageBox = new MessageBox(App.getShell(), SWT.ICON_INFORMATION | SWT.OK);
+                messageBox.setText("Decryption Time");
+                messageBox.setMessage("Decryption took " + timeElapsed + " ms.");
+                messageBox.open();
+            }
         }
 
         if(storedCredential == null) {
             Logger.log("AppLogic", "No token found for credential key '" + credKey + "'.");
             showMessage("No credentials for key '" + credKey + "' retrieved.");
+            return false;
         } else {
-            TokenViewerDialog dialog = new TokenViewerDialog(credKey, storedCredential.getValue());
-            dialog.open();
+            if(openDialog) {
+                TokenViewerDialog dialog = new TokenViewerDialog(credKey, storedCredential.getValue());
+                dialog.open();
+            }
+            return true;
         }
 
     }
