@@ -1,3 +1,9 @@
+/**
+ * File: AppLogic.java
+ * Author: Jannis Günsche
+ * Description: This class contains the logic of the application.
+ */
+
 package secureTokenDemo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,23 +18,41 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 
+/**
+ * This class contains the logic of the application.
+ */
 public class AppLogic {
 
     private AppLogic() {
         // Prevent instantiation
     }
 
+    /**
+     * Overloading method for retrieving a token. Uses default values for measureTime (false) and count (1).
+     *
+     * @param credKey the credential key
+     * @return if the token was successfully retrieved
+     */
     public static boolean retrieveToken(String credKey) {
         return retrieveToken(credKey, false, 1);
     }
 
+    /**
+     * Method for retrieving a token. Can be used to measure the time of the decryption process and to repeat the retrieval multiple times.
+     *
+     * @param credKey     the credential key
+     * @param measureTime true if the time should be measured
+     * @param count       the number of times the retrieval should be repeated
+     * @return the boolean
+     */
     public static boolean retrieveToken(String credKey, boolean measureTime, int count) {
-        if(count < 1) {
+
+        if(count < 1) { // Invalid count
             Logger.log("AppLogic", "Invalid count.");
             return false;
-        } else if(count == 1) {
+        } else if(count == 1) { // Single retrieval
             return retrieveToken(credKey, measureTime, true);
-        } else {
+        } else { // Multiple retrievals
             boolean lastResult = false;
             for(int i = 0; i < count; i++) {
                 lastResult = retrieveToken(credKey, measureTime, false);
@@ -44,8 +68,17 @@ public class AppLogic {
             AppShell.buttonReadTokenMeasure.setText("Request token (measure time)");
             return true;
         }
+
     }
 
+    /**
+     * Method for retrieving a token. Can be used to measure the time of the decryption process and to open a dialog with the token.
+     *
+     * @param credKey     the credential key
+     * @param measureTime true if the time should be measured
+     * @param openDialog  true if the token should be displayed in a dialog after retrieval
+     * @return the boolean
+     */
     public static boolean retrieveToken(String credKey, boolean measureTime, boolean openDialog) {
         StoredToken storedCredential = null;
         Instant start = null;
@@ -55,7 +88,10 @@ public class AppLogic {
             if(measureTime) {
                 start = Instant.now();
             }
+
+            // Retrieve token
             storedCredential = SecureStorageHandler.getStoredCredential(credKey);
+
             if(measureTime) {
                 end = Instant.now();
             }
@@ -64,6 +100,7 @@ public class AppLogic {
             return false;
         }
 
+        // logging the time and showing a message box if openDialog is true
         if(measureTime && start != null && end != null) {
             long timeElapsed = Duration.between(start, end).toMillis();
             Logger.log("AppShell", "Decryption took " + timeElapsed + " ms.");
@@ -76,12 +113,13 @@ public class AppLogic {
             }
         }
 
+        // Show message box if no token was found
         if(storedCredential == null) {
             Logger.log("AppLogic", "No token found for credential key '" + credKey + "'.");
             showMessage("No credentials for key '" + credKey + "' retrieved.");
             return false;
         } else {
-            if(openDialog) {
+            if(openDialog) { // Show token in dialog
                 TokenViewerDialog dialog = new TokenViewerDialog(credKey, storedCredential.getValue());
                 dialog.open();
             }
@@ -90,6 +128,11 @@ public class AppLogic {
 
     }
 
+    /**
+     * Add cred key to demo app for later retrieval.
+     *
+     * @param credKey the cred key
+     */
     public static void addCredKeyToDemoApp(String credKey) {
         CredentialTracker.getInstance().addCredential(credKey);
 
@@ -100,6 +143,12 @@ public class AppLogic {
     }
 
 
+    /**
+     * Store credentials in secure storage.
+     *
+     * @param credKey the cred key
+     * @param token   the token
+     */
     // NOTICE: The passing of the token as a String is a security vulnerability!
     public static void storeCreds(String credKey, String token) {
         credKey = App.CRED_KEY_PREFIX + credKey;
@@ -146,6 +195,9 @@ public class AppLogic {
         messageBox.open();
     }
 
+    /**
+     * Sync combo box with credential tracker.
+     */
     public static void syncComboBoxWithCredentialTracker() {
         String selected = AppShell.combo.getText();
         AppShell.combo.removeAll();
@@ -153,6 +205,12 @@ public class AppLogic {
         AppShell.combo.setText(selected);
     }
 
+    /**
+     * Decode and prettify token string.
+     *
+     * @param token the token
+     * @return the string
+     */
     public static String decodeAndPrettifyToken(char[] token) {
         // Expecting a valid 3-Part JWT token
 
@@ -184,7 +242,6 @@ public class AppLogic {
                     Logger.log("AppLogic", "Error decoding token: " + e.getMessage());
                 }
             }
-
 
             return decodedTokenPretty;
         } catch (Exception e) {

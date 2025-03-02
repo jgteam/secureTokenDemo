@@ -1,17 +1,29 @@
+/**
+ * File: CopyCommandDialog.java
+ * Author: Jannis Günsche
+ * Description: This class contains the dialog for copying a command.
+ */
 package secureTokenDemo;
 
-import logger.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
+/**
+ * The class CopyCommandDialog contains the dialog for copying a command.
+ */
 public class CopyCommandDialog {
 
     private CopyCommandDialog() {
         // Prevent instantiation
     }
 
+    /**
+     * Open the dialog.
+     *
+     * @param cmd the command to copy
+     */
     public static void open(String cmd) {
 
         Display display = App.getDisplay();

@@ -8,14 +8,8 @@
 
 package secureTokenDemo;
 
-import com.microsoft.credentialstorage.SecretStore;
-import com.microsoft.credentialstorage.StorageProvider;
-import com.microsoft.credentialstorage.model.StoredCredential;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-
-import java.util.Arrays;
-
 
 /**
  * The type App.
@@ -23,11 +17,18 @@ import java.util.Arrays;
 public class App
 {
 
-    // Config
-    public static final String USERNAME = "DEMOGUI_USER_SecureStorageDemo";
+    /**
+     * The constant CRED_KEY_PREFIX.
+     */
     public static final String CRED_KEY_PREFIX = "TOKENDEMO_";
 
+    /**
+     * The constant CREDENTIAL_STORAGE_FILE.
+     */
     public static final String CREDENTIAL_STORAGE_FILE = "credentials.txt";
+    /**
+     * The constant CREDENTIAL_JSON_KEY.
+     */
     public static final String CREDENTIAL_JSON_KEY = "credKeys";
 
     private static Display display;
@@ -58,10 +59,20 @@ public class App
         display.dispose();
     }
 
+    /**
+     * Gets display.
+     *
+     * @return the display
+     */
     public static Display getDisplay() {
         return display;
     }
 
+    /**
+     * Gets shell.
+     *
+     * @return the shell
+     */
     public static Shell getShell() {
         return shell;
     }

@@ -20,9 +20,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The class Credential tracker.
+ */
 public class CredentialTracker {
 
     private static CredentialTracker instance = null;
+
+    // List of all credentials
     private List<String> credentials;
 
 
@@ -30,6 +35,11 @@ public class CredentialTracker {
         credentials = new ArrayList<>();
     }
 
+    /**
+     * Gets instance of the CredentialTracker singleton.
+     *
+     * @return the instance
+     */
     public static CredentialTracker getInstance() {
         if (instance == null) {
             instance = new CredentialTracker();
@@ -37,6 +47,9 @@ public class CredentialTracker {
         return instance;
     }
 
+    /**
+     * Load existing credentials from file.
+     */
     public void loadCredentials() {
         Logger.log("CredentialTracker", "Loading credentials from file... (File: " + App.CREDENTIAL_STORAGE_FILE + ")");
 
@@ -60,6 +73,7 @@ public class CredentialTracker {
         AppLogic.syncComboBoxWithCredentialTracker();
     }
 
+    // Save credentials to file
     private void saveCredentials() {
         Logger.log("CredentialTracker", "Saving credentials to file... (File: " + App.CREDENTIAL_STORAGE_FILE + ")");
 
@@ -82,12 +96,22 @@ public class CredentialTracker {
         }
     }
 
+    /**
+     * Add credential.
+     *
+     * @param credential the credential
+     */
     public void addCredential(String credential) {
         Logger.log("CredentialTracker", "Adding credential: " + credential);
         credentials.add(credential);
         saveCredentials();
     }
 
+    /**
+     * Gets credentials.
+     *
+     * @return the credentials
+     */
     public List<String> getCredentials() {
         Logger.log("CredentialTracker", "Returning all credentials.");
         return new ArrayList<>(credentials);

@@ -3,6 +3,7 @@
  * Author: Jannis Günsche
  * Description: This class contains the main UI window of the application.
  */
+
 package secureTokenDemo;
 
 import logger.Logger;
@@ -13,23 +14,50 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
+/**
+ * The type App shell.
+ */
 public class AppShell {
 
     private static Shell shell = null;
 
+    /**
+     * The constant combo.
+     */
     // UI elements
     public static Combo combo;
+    /**
+     * The constant textExisting.
+     */
     public static Text textExisting;
+    /**
+     * The constant textNewName.
+     */
     public static Text textNewName;
+    /**
+     * The constant textNewToken.
+     */
     public static Text textNewToken;
+    /**
+     * The constant comboCreateType.
+     */
     public static Combo comboCreateType;
 
+    /**
+     * The constant buttonReadTokenMeasure.
+     */
     public static Button buttonReadTokenMeasure;
 
     private AppShell() {
         // Prevent instantiation
     }
 
+    /**
+     * Gets shell.
+     *
+     * @param display the display
+     * @return the shell
+     */
     public static Shell getShell(Display display) {
 
         if (shell != null) {
@@ -45,10 +73,6 @@ public class AppShell {
 
 
         // Layouts
-        //GridLayout groupLayout = new GridLayout(2, false);
-        //GridData groupGridData = new GridData(SWT.FILL, SWT.FILL, true, false);
-        //GridData lastGroupGridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-
         GridData buttonsGridData = new GridData(SWT.END, SWT.CENTER, true, true);
         buttonsGridData.widthHint = 220;
         GridData buttonsGridDataMeasure = new GridData(SWT.END, SWT.CENTER, true, true, 2, 1);
@@ -146,7 +170,6 @@ public class AppShell {
 
 
         // LISTENERS
-
         buttonReadToken.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {

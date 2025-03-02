@@ -1,3 +1,8 @@
+/**
+ * File: LogDialog.java
+ * Author: Jannis Günsche
+ * Description: This class contains the dialog for viewing the log.
+ */
 package secureTokenDemo;
 
 import logger.Logger;
@@ -9,12 +14,18 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * The class LogDialog contains the dialog for viewing the log.
+ */
 public class LogDialog {
 
     private LogDialog() {
         // Prevent instantiation
     }
 
+    /**
+     * Open the dialog.
+     */
     public static void open() {
 
         Display display = App.getDisplay();
