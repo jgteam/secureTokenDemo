@@ -15,7 +15,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
 /**
- * The type App shell.
+ * The class AppShell contains the main UI window of the application.
  */
 public class AppShell {
 
@@ -24,7 +24,6 @@ public class AppShell {
     /**
      * The constant combo.
      */
-    // UI elements
     public static Combo combo;
     /**
      * The constant textExisting.

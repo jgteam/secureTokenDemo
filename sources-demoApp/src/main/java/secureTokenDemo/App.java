@@ -11,9 +11,6 @@ package secureTokenDemo;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-/**
- * The type App.
- */
 public class App
 {
 

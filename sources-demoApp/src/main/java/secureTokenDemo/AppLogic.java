@@ -38,7 +38,7 @@ public class AppLogic {
     }
 
     /**
-     * Method for retrieving a token. Can be used to measure the time of the decryption process and to repeat the retrieval multiple times.
+     * Overloading Method for retrieving a token. Can be used to measure the time of the decryption process and to repeat the retrieval multiple times.
      *
      * @param credKey     the credential key
      * @param measureTime true if the time should be measured
@@ -46,7 +46,6 @@ public class AppLogic {
      * @return the boolean
      */
     public static boolean retrieveToken(String credKey, boolean measureTime, int count) {
-
         if(count < 1) { // Invalid count
             Logger.log("AppLogic", "Invalid count.");
             return false;
@@ -68,7 +67,6 @@ public class AppLogic {
             AppShell.buttonReadTokenMeasure.setText("Request token (measure time)");
             return true;
         }
-
     }
 
     /**
