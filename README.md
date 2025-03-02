@@ -96,4 +96,4 @@ java -jar <your-cli-jar-filename>.jar <your-credential-key> <your-token>
 
 ## Measuring time
 
-To measure the time you can press the separate "measure" button in the App. This will measure retrieving the token 100 times and log the time simultaneously. The time is measured in milliseconds and can be seen in the time measurement dialog. To open the time measurement dialog, you can press the "View Time Measurements" button in the App.
+To measure the time you can press the separate measure button in the App. This will measure retrieving the token 100 times and log the time simultaneously. The time is measured in milliseconds and can be seen in the time measurement dialog. To open the time measurement dialog, you can press the "View Time Measurements" button in the App.
