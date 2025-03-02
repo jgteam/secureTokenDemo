@@ -2,6 +2,8 @@
 
 ![Maven Build](https://github.com/jgteam/secureTokenDemo/actions/workflows/maven.yml/badge.svg)
 
+For the full setup and walkthrough, please watch the following video:
+
 [Setup and Demo Video](https://www.youtube.com/watch?v=YQw1_svw4Eo)
 
 This is a demo app to show how to use the "SecureStore" capabilities of different platforms and will be a Proof of Concept for storing sensitive OpenID Connect tokens securely when used with native desktop applications.
@@ -90,3 +92,8 @@ To pass `credential-key` and `token` to the CLI-App, you can use the following c
 ```shell
 java -jar <your-cli-jar-filename>.jar <your-credential-key> <your-token>
 ```
+
+
+## Measuring time
+
+To measure the time you can press the separate "measure" button in the App. This will measure retrieving the token 100 times and log the time simultaneously. The time is measured in milliseconds and can be seen in the time measurement dialog. To open the time measurement dialog, you can press the "View Time Measurements" button in the App.
